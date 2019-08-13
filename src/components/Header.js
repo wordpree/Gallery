@@ -33,10 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     backgroundColor: "#232931",
-    fontFamily: "'Arapey', serif"
+    zIndex: 99
   },
   iconBtn: {
-    fontSize: "3rem",
+    fontSize: "2rem",
     color: "#fff",
     position: "absolute",
     top: "50%",
@@ -70,8 +70,17 @@ const useStyles = makeStyles(theme => ({
   root: {
     background: "#fff"
   },
-  tile: {
-    background: "#F29D33"
+  tile0: {
+    background: "#ED765F"
+  },
+  tile1: {
+    background: "#F4AB53"
+  },
+  tile2: {
+    background: "#F09256"
+  },
+  tile3: {
+    background: "#F9C950"
   }
 }));
 
@@ -88,11 +97,7 @@ export default function Header() {
   ));
 
   return (
-    <AppBar
-      color="default"
-      position="static"
-      classes={{ colorDefault: classes.appBar }}
-    >
+    <AppBar color="default" classes={{ colorDefault: classes.appBar }}>
       <Toolbar>
         <div className={classes.imgContainer}>
           <div className={classes.img} />
@@ -113,16 +118,22 @@ export default function Header() {
         >
           <div className={classes.root}>
             <GridList cellHeight={320} className={classes.gridList}>
-              {icons.map((Icon, index) => (
-                <GridListTile
-                  key={index}
-                  classes={{ tile: classes.tile, root: classes.root }}
-                >
-                  <IconButton onClick={handleClose} className={classes.iconBtn}>
-                    <Icon fontSize="inherit" />
-                  </IconButton>
-                </GridListTile>
-              ))}
+              {icons.map((Icon, index) => {
+                let tile = "tile" + index;
+                return (
+                  <GridListTile
+                    key={index}
+                    classes={{ tile: classes[tile], root: classes.root }}
+                  >
+                    <IconButton
+                      onClick={handleClose}
+                      className={classes.iconBtn}
+                    >
+                      <Icon fontSize="inherit" />
+                    </IconButton>
+                  </GridListTile>
+                );
+              })}
             </GridList>
           </div>
         </Drawer>
