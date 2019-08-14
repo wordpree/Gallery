@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -8,7 +8,6 @@ import {
   GridList,
   GridListTile
 } from "@material-ui/core";
-import logo from "../assets/images/logo.png";
 import {
   ImageMultiple,
   ViewHeadline,
@@ -17,6 +16,8 @@ import {
   AccountCircle
 } from "mdi-material-ui";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import logo from "../assets/images/logo.png";
 
 const useStyles = makeStyles(theme => ({
   right: {
@@ -32,8 +33,7 @@ const useStyles = makeStyles(theme => ({
     width: 85
   },
   appBar: {
-    backgroundColor: "#232931",
-    zIndex: 99
+    backgroundColor: "#232931"
   },
   iconBtn: {
     fontSize: "2rem",
@@ -86,58 +86,76 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
   const classes = useStyles();
-  const icons = [HomeCircle, AccountCircle, ImageMultiple, ShareVariant];
-  const [right, setRight] = useState(false);
+  const lg = useMediaQuery("(min-width:1026px)");
+  const [right, setRight] = useState(false); //mobile drawer
   const handleClose = () => setRight(false);
   const handleClick = () => setRight(true);
+  const [height, setHeight] = useState(0); //clear fixed position
+  const ref = useRef();
+  useEffect(() => {
+    function handleMeasure() {
+      setHeight(ref.current.clientHeight);
+    }
+    handleMeasure();
+  }, []);
+  const icons = [HomeCircle, AccountCircle, ImageMultiple, ShareVariant];
   const iconLists = icons.map((Icon, index) => (
     <IconButton key={index} className={classes.icon}>
       <Icon />
     </IconButton>
   ));
-
   return (
-    <AppBar color="default" classes={{ colorDefault: classes.appBar }}>
-      <Toolbar>
-        <div className={classes.imgContainer}>
-          <div className={classes.img} />
-        </div>
-        <div style={{ flexGrow: 1 }} />
-        {iconLists}
-        <IconButton
-          className={classes.more + " " + classes.icon}
-          onClick={handleClick}
-        >
-          <ViewHeadline />
-        </IconButton>
-        <Drawer
-          transitionDuration={{ enter: 1000, exit: 600 }}
-          anchor="right"
-          open={right}
-          classes={{ paperAnchorRight: classes.right }}
-        >
-          <div className={classes.root}>
-            <GridList cellHeight={320} className={classes.gridList}>
-              {icons.map((Icon, index) => {
-                let tile = "tile" + index;
-                return (
-                  <GridListTile
-                    key={index}
-                    classes={{ tile: classes[tile], root: classes.root }}
-                  >
-                    <IconButton
-                      onClick={handleClose}
-                      className={classes.iconBtn}
-                    >
-                      <Icon fontSize="inherit" />
-                    </IconButton>
-                  </GridListTile>
-                );
-              })}
-            </GridList>
+    <>
+      <AppBar
+        ref={ref}
+        color="default"
+        position="fixed"
+        classes={{ colorDefault: classes.appBar }}
+      >
+        <Toolbar>
+          <div className={classes.imgContainer}>
+            <Link to="/">
+              <div className={classes.img} />
+            </Link>
           </div>
-        </Drawer>
-      </Toolbar>
-    </AppBar>
+          <div style={{ flexGrow: 1 }} />
+          {iconLists}
+          <IconButton
+            className={classes.more + " " + classes.icon}
+            onClick={handleClick}
+          >
+            <ViewHeadline />
+          </IconButton>
+          <Drawer
+            transitionDuration={{ enter: 1000, exit: 600 }}
+            anchor="right"
+            open={right}
+            classes={{ paperAnchorRight: classes.right }}
+          >
+            <div className={classes.root}>
+              <GridList cellHeight={320} className={classes.gridList}>
+                {icons.map((Icon, index) => {
+                  let tile = "tile" + index;
+                  return (
+                    <GridListTile
+                      key={index}
+                      classes={{ tile: classes[tile], root: classes.root }}
+                    >
+                      <IconButton
+                        onClick={handleClose}
+                        className={classes.iconBtn}
+                      >
+                        <Icon fontSize="inherit" />
+                      </IconButton>
+                    </GridListTile>
+                  );
+                })}
+              </GridList>
+            </div>
+          </Drawer>
+        </Toolbar>
+      </AppBar>
+      <div style={{ height: lg ? 0 : `${height}px` }} />
+    </>
   );
 }

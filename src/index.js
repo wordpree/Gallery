@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Theme from "./components/ThemeCustomize";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -7,7 +8,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <Router>
-    <App />
+    <Theme>
+      <App />
+    </Theme>
   </Router>,
   document.getElementById("root")
 );
