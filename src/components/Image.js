@@ -7,8 +7,7 @@ import CardMediaRef from "./CardMediaRef";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: "100%",
-    margin: "0 auto"
+    maxWidth: "100%"
   },
   cardHeader: {
     fontFamily: "'Arapey', serif",
