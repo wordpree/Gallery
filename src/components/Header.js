@@ -98,9 +98,9 @@ export default function Header() {
     }
     handleMeasure();
   }, []);
-  const icons = [HomeCircle, AccountCircle, ImageMultiple, ShareVariant];
+  const icons = [AccountCircle, ImageMultiple, ShareVariant];
   const iconLists = icons.map((Icon, index) => (
-    <IconButton key={index} className={classes.icon}>
+    <IconButton key={index} className={classes.icon} color="secondary">
       <Icon />
     </IconButton>
   ));
@@ -134,7 +134,7 @@ export default function Header() {
           >
             <div className={classes.root}>
               <GridList cellHeight={320} className={classes.gridList}>
-                {icons.map((Icon, index) => {
+                {[HomeCircle, ...icons].map((Icon, index) => {
                   let tile = "tile" + index;
                   return (
                     <GridListTile

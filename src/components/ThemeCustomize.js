@@ -12,6 +12,10 @@ export default function ThemeCustomize(props) {
         lg: 1026,
         xl: 1920
       }
+    },
+    palette: {
+      primary: { main: "#232931" },
+      secondary: { main: "#f73859" }
     }
   });
   return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>;

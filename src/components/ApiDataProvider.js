@@ -9,6 +9,7 @@ const client = contentful.createClient({
 const GalleryContext = React.createContext();
 
 export const StateProvider = props => {
+  const { query } = props;
   const [state, setState] = useState({
     loading: true,
     gallery: []
@@ -17,7 +18,7 @@ export const StateProvider = props => {
   useEffect(() => {
     async function handleDataFetch() {
       await client
-        .getEntry("1S5uWC5GZheNDLUFT5JYS9")
+        .getEntry(query)
         .then(entry =>
           setState({
             gallery: entry.fields.homepage.map(item => ({
@@ -30,7 +31,7 @@ export const StateProvider = props => {
         .catch(console.error);
     }
     handleDataFetch();
-  }, []);
+  }, [query]);
   return (
     <GalleryContext.Provider value={state}>
       {props.children}

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import useQueryMedia from "@material-ui/core/useMediaQuery";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   entryLayer: {
     overflow: "hidden",
     position: "relative",
     background: "#f1d18a"
   }
-}));
-
+});
+//only with>1026 injert entry layer div
 function WithImageLists(Component) {
   return function Enhancer() {
     const classes = useStyles();

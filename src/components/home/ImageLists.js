@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import Loading from "./Loading";
-import { useStateValue } from "./ApiDataProvider";
+import Loading from "../Loading";
+import { useStateValue } from "../ApiDataProvider";
 import Image from "./Image";
 import WithImageLists from "./WidthImageLists";
 
