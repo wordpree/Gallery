@@ -9,7 +9,7 @@ const client = contentful.createClient({
 const GalleryContext = React.createContext();
 
 export const StateProvider = props => {
-  const { query } = props;
+  const { query, width, height } = props;
   const [state, setState] = useState({
     loading: true,
     gallery: []
@@ -23,7 +23,7 @@ export const StateProvider = props => {
           setState({
             gallery: entry.fields.homepage.map(item => ({
               title: item.fields.title,
-              url: item.fields.file.url
+              url: `${item.fields.file.url}?w=${width}&h=${height}`
             })),
             loading: false
           })
@@ -31,7 +31,7 @@ export const StateProvider = props => {
         .catch(console.error);
     }
     handleDataFetch();
-  }, [query]);
+  }, [width, height, query]);
   return (
     <GalleryContext.Provider value={state}>
       {props.children}

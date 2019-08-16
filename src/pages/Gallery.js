@@ -12,7 +12,7 @@ export default function Gallery({ match }) {
   return (
     <Container maxWidth="xl" style={{ padding: 0 }}>
       <Header />
-      <StateProvider query={query[key]}>
+      <StateProvider query={query[key]} width={1250} height={850}>
         <GridLists />
       </StateProvider>
     </Container>
