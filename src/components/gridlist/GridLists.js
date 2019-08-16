@@ -3,14 +3,14 @@ import { useStateValue } from "../ApiDataProvider";
 import Loading from "../Loading";
 import { GridList, GridListTile } from "@material-ui/core";
 import useQueryMedia from "@material-ui/core/useMediaQuery";
-import PrevPageFab from "../PrevPageFab";
 import GridListsDialog from "./GridListsDialog";
+import PrevPageFab from "../PrevPageFab";
 
 export default function GridLists() {
   const state = useStateValue();
   const md = useQueryMedia("(min-width:760px)");
   const lg = useQueryMedia("(min-width:1025px)");
-  const [open, setOpen] = useState(false);
+  const [ele, setEle] = useState({ open: false, index: 0 });
   const i = { acc: 0, cols: 0 };
   let cellHeight = lg ? 335 : md ? 250 : 180;
 
@@ -35,16 +35,22 @@ export default function GridLists() {
         {state.gallery.map((item, index) => {
           const cols = imageSArg();
           return (
-            <GridListTile key={index} cols={cols} onClick={() => setOpen(true)}>
+            <GridListTile
+              key={index}
+              cols={cols}
+              onClick={() => {
+                setEle({ open: true, index: index });
+              }}
+            >
               <img src={item.url} alt={item.title} />
             </GridListTile>
           );
         })}
       </GridList>
       <GridListsDialog
-        open={open}
-        close={() => setOpen(false)}
-        onclick={e => console.log(e.target.style)}
+        open={ele.open}
+        close={() => setEle({ open: false, index: ele.index })}
+        index={ele.index}
       />
       <PrevPageFab to="/" />
     </>
