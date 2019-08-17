@@ -63,7 +63,7 @@ export default function GridLists() {
   const classes = useStyles();
   const state = useStateValue();
   const md = useQueryMedia("(min-width:760px)");
-  const lg = useQueryMedia("(min-width:1025px)");
+  const lg = useQueryMedia("(min-width:1026px)");
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -147,7 +147,10 @@ export default function GridLists() {
                 >
                   <ArrowRight />
                 </Fab>
-                <CardMedia image={item.urlHd} className={classes.media} />
+                <CardMedia
+                  image={lg ? item.urlHd : item.url}
+                  className={classes.media}
+                />
               </Card>
             </div>
           ))}
