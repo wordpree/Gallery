@@ -11,7 +11,7 @@ function App() {
       <CssBaseline />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/:gallery" component={Gallery} />
+        <Route exact path="/:gallery" component={Gallery} />
         <Route component={Error} />
       </Switch>
     </>
