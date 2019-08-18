@@ -70,7 +70,7 @@ export default function Error() {
         />
         <CardActions className={classes.action}>
           <Button className={classes.btn} size="large" component={ButtonLink}>
-            Go Back
+            Go Home
           </Button>
         </CardActions>
       </Card>

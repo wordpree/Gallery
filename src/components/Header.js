@@ -1,13 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Drawer,
-  GridList,
-  GridListTile
-} from "@material-ui/core";
+import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import {
   ImageMultiple,
   ViewHeadline,
@@ -16,13 +9,10 @@ import {
   AccountCircle
 } from "mdi-material-ui";
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import logo from "../assets/images/logo.png";
+import HeaderMob from "./HeaderMob";
 
 const useStyles = makeStyles(theme => ({
-  right: {
-    width: "100%"
-  },
   img: {
     backgroundImage: `url(${logo})`,
     backgroundSize: "cover",
@@ -34,15 +24,6 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     backgroundColor: "#232931"
-  },
-  iconBtn: {
-    fontSize: "2rem",
-    color: "#fff",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-    WebkitTransform: "translate(-50%,-50%)"
   },
   icon: {
     display: "none",
@@ -61,35 +42,14 @@ const useStyles = makeStyles(theme => ({
       display: "none"
     }
   },
-  mobIcon: {
-    color: "#ededed",
-    "&:hover": {
-      background: "#f73859"
-    }
-  },
-  root: {
-    background: "#fff"
-  },
-  tile0: {
-    background: "#ED765F"
-  },
-  tile1: {
-    background: "#F4AB53"
-  },
-  tile2: {
-    background: "#F09256"
-  },
-  tile3: {
-    background: "#F9C950"
+  gridList: {
+    background: "#232931"
   }
 }));
 
 export default function Header() {
   const classes = useStyles();
-  const lg = useMediaQuery("(min-width:1026px)");
-  const [right, setRight] = useState(false); //mobile drawer
-  const handleClose = () => setRight(false);
-  const handleClick = () => setRight(true);
+  const [top, setRight] = useState(false); //mobile drawer
   const [height, setHeight] = useState(0); //clear fixed position
   const ref = useRef();
   useEffect(() => {
@@ -98,12 +58,26 @@ export default function Header() {
     }
     handleMeasure();
   }, []);
-  const icons = [AccountCircle, ImageMultiple, ShareVariant];
-  const iconLists = icons.map((Icon, index) => (
-    <IconButton key={index} className={classes.icon} color="secondary">
-      <Icon />
-    </IconButton>
-  ));
+  const icons = [AccountCircle, ImageMultiple];
+  const links = ["/about", "/image"];
+  const mobileTiles = [
+    {
+      icon: HomeCircle,
+      link: "/",
+      title: "Home Page"
+    },
+    {
+      icon: AccountCircle,
+      link: "/about",
+      title: "About Us"
+    },
+    {
+      icon: ImageMultiple,
+      link: "/image",
+      title: "More Images"
+    }
+  ];
+
   return (
     <>
       <AppBar
@@ -119,43 +93,30 @@ export default function Header() {
             </Link>
           </div>
           <div style={{ flexGrow: 1 }} />
-          {iconLists}
+          {icons.map((Icon, index) => (
+            <Link to={links[index]} key={index}>
+              <IconButton className={classes.icon} color="secondary">
+                <Icon />
+              </IconButton>
+            </Link>
+          ))}
+          <IconButton className={classes.icon} color="secondary">
+            <ShareVariant />
+          </IconButton>
           <IconButton
             className={classes.more + " " + classes.icon}
-            onClick={handleClick}
+            onClick={() => setRight(true)}
           >
             <ViewHeadline />
           </IconButton>
-          <Drawer
-            transitionDuration={{ enter: 1000, exit: 600 }}
-            anchor="right"
-            open={right}
-            classes={{ paperAnchorRight: classes.right }}
-          >
-            <div className={classes.root}>
-              <GridList cellHeight={320} className={classes.gridList}>
-                {[HomeCircle, ...icons].map((Icon, index) => {
-                  let tile = "tile" + index;
-                  return (
-                    <GridListTile
-                      key={index}
-                      classes={{ tile: classes[tile], root: classes.root }}
-                    >
-                      <IconButton
-                        onClick={handleClose}
-                        className={classes.iconBtn}
-                      >
-                        <Icon fontSize="inherit" />
-                      </IconButton>
-                    </GridListTile>
-                  );
-                })}
-              </GridList>
-            </div>
-          </Drawer>
+          <HeaderMob
+            top={top}
+            handleClose={() => setRight(false)}
+            mobIcon={mobileTiles}
+          />
         </Toolbar>
       </AppBar>
-      <div style={{ height: lg ? 0 : `${height}px` }} />
+      <div style={{ height: `${height}px` }} />
     </>
   );
 }

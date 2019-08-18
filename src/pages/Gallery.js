@@ -8,13 +8,12 @@ import Error from "./Error";
 export default function Gallery({ match }) {
   const key = match.params.gallery;
   const query = queryPara.find(item => key === Object.keys(item).toString());
-  console.log(query);
   return (
     <Container maxWidth="xl" style={{ padding: 0 }}>
       {query !== undefined ? (
         <>
           <Header />
-          <StateProvider query={query[key]} width={1250} height={850}>
+          <StateProvider query={query[key]}>
             <GridLists />
           </StateProvider>
         </>

@@ -7,8 +7,10 @@ import Image from "./Image";
 import WithImageLists from "./WidthImageLists";
 
 const useStyles = makeStyles(theme => ({
-  gridContainer: {
-    background: "#232931"
+  gridItem: {
+    [theme.breakpoints.up("lg")]: {
+      padding: "0 !important"
+    }
   }
 }));
 
@@ -19,9 +21,17 @@ function ImageLists() {
   return state.loading && state.gallery.length === 0 ? (
     <Loading />
   ) : (
-    <Grid container spacing={1} className={classes.gridContainer}>
+    <Grid container spacing={1}>
       {state.gallery.map((item, index) => (
-        <Grid item key={index} xs={12} md={4} sm={6} lg={1}>
+        <Grid
+          item
+          className={classes.gridItem}
+          key={index}
+          xs={12}
+          md={4}
+          sm={6}
+          lg={1}
+        >
           <Image data={item} index={index} />
         </Grid>
       ))}

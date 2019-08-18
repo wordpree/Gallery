@@ -23,8 +23,8 @@ export const StateProvider = props => {
           setState({
             gallery: entry.fields.homepage.map(item => ({
               title: item.fields.title,
-              url: `${item.fields.file.url}?w=${width}&h=${height}`,
-              urlHd: `${item.fields.file.url}?fl=progressive`
+              url: `${item.fields.file.url}?w=1250&h=850`,
+              urlMob: `${item.fields.file.url}?w=600&h=600`
             })),
             loading: false
           })

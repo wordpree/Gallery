@@ -147,7 +147,7 @@ export default function GridLists() {
                   <ArrowRight />
                 </Fab>
                 <CardMedia
-                  image={lg ? item.urlHd : item.url}
+                  image={lg ? item.url : item.urlMob}
                   className={classes.media}
                 />
               </Card>
