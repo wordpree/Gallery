@@ -7,7 +7,8 @@ import {
   GridListTile,
   Dialog,
   Card,
-  CardMedia
+  CardMedia,
+  Zoom
 } from "@material-ui/core";
 import { ArrowLeft, ArrowRight } from "mdi-material-ui";
 import useQueryMedia from "@material-ui/core/useMediaQuery";
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
     position: "absolute",
     height: "100%",
     width: "100%",
-    transition: "opacity 0.5s ease-in-out"
+    transition: "opacity 0.8s ease-in-out"
   },
   card: {
     width: "100%",
@@ -36,10 +37,6 @@ const useStyles = makeStyles({
     width: "100%",
     height: "100%"
   },
-  current: {
-    opacity: 1
-  },
-
   iconBtn: {
     position: "absolute",
     top: "50%",
@@ -105,6 +102,8 @@ export default function GridLists() {
         })}
       </GridList>
       <Dialog
+        TransitionComponent={Zoom}
+        transitionDuration={500}
         fullWidth
         maxWidth="xl"
         classes={{ container: classes.container }}
